@@ -9,6 +9,16 @@ This package extends [company-quickhelp'](https://github.com/expez/company-quick
 for terminal support using [popup](https://github.com/auto-complete/popup-el).
 
 
+## Usage
+
+Just add these lines of code to your configuration, then it should be good to go.
+
+```el
+(with-eval-after-load 'company-quickhelp
+  (require 'company-quickhelp-terminal))
+```
+
+
 ## Contribution
 
 If you would like to contribute to this project, you may either
