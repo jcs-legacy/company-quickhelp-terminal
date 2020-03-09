@@ -15,7 +15,7 @@ Just add these lines of code to your configuration, then it should be good to go
 
 ```el
 (with-eval-after-load 'company-quickhelp
-  (require 'company-quickhelp-terminal))
+  (company-quickhelp-terminal-mode 1))
 ```
 
 
