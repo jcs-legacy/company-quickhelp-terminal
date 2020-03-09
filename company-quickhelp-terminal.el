@@ -4,7 +4,7 @@
 ;; Created date 2019-12-09 23:06:42
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
-;; Description: Terminal support for `company-quickhelp'
+;; Description: Terminal support for `company-quickhelp'.
 ;; Keyword: terminal extends support tip help
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "24.4") (company-quickhelp "2.2.0") (popup "0.5.3"))
@@ -27,7 +27,7 @@
 
 ;;; Commentary:
 ;;
-;; Terminal support for `company-quickhelp'
+;; Terminal support for `company-quickhelp'.
 ;;
 
 ;;; Code:
@@ -35,6 +35,13 @@
 (require 'company-quickhelp)
 
 (require 'popup)
+
+
+(defgroup company-quickhelp-terminal nil
+  "Terminal support for `company-quickhelp'."
+  :prefix "company-quickhelp-terminal-"
+  :group 'tools
+  :link '(url-link :tag "Repository" "https://github.com/jcs090218/company-quickhelp-terminal"))
 
 
 (defun company-quickhelp-terminal--show ()
@@ -93,9 +100,25 @@
    (fboundp 'x-show-tip)))
 
 
-(advice-add 'company-quickhelp--show :override #'company-quickhelp-terminal--show)
-(advice-add 'company-quickhelp-pos-tip-available-p :override #'company-quickhelp-terminal-pos-tip-available-p)
+(defun company-quickhelp-terminal--enable ()
+  "Enable `company-quickhelp-terminal'."
+  (advice-add 'company-quickhelp--show :override #'company-quickhelp-terminal--show)
+  (advice-add 'company-quickhelp-pos-tip-available-p :override #'company-quickhelp-terminal-pos-tip-available-p))
 
+(defun company-quickhelp-terminal--disable ()
+  "Disable `company-quickhelp-terminalw'."
+  (advice-remove 'company-quickhelp--show #'company-quickhelp-terminal--show)
+  (advice-remove 'company-quickhelp-pos-tip-available-p #'company-quickhelp-terminal-pos-tip-available-p))
+
+;;;###autoload
+(define-minor-mode company-quickhelp-terminal-mode
+  "Minor mode 'company-quickhelp-terminal-mode'."
+  :global t
+  :require 'company-quickhelp-terminal
+  :group 'company-quickhelp-terminal
+  (if company-quickhelp-terminal-mode
+      (company-quickhelp-terminal--enable)
+    (company-quickhelp-terminal--disable)))
 
 (provide 'company-quickhelp-terminal)
 ;;; company-quickhelp-terminal.el ends here
