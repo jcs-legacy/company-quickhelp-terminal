@@ -33,16 +33,13 @@
 ;;; Code:
 
 (require 'company-quickhelp)
-
 (require 'popup)
-
 
 (defgroup company-quickhelp-terminal nil
   "Terminal support for `company-quickhelp'."
   :prefix "company-quickhelp-terminal-"
   :group 'tools
   :link '(url-link :tag "Repository" "https://github.com/jcs090218/company-quickhelp-terminal"))
-
 
 (defun company-quickhelp-terminal--show ()
   "Override `company-quickhelp--show' function from `company-quickhelp'."
@@ -61,7 +58,13 @@
                                   (- (if ovl (overlay-get ovl 'company-column) 1) 1)))
              (x-gtk-use-system-tooltips nil)
              (fg-bg `(,company-quickhelp-color-foreground
-                      . ,company-quickhelp-color-background)))
+                      . ,company-quickhelp-color-background))
+             (pos (save-excursion
+                    (goto-char (min (overlay-start ovl) (point)))
+                    (line-beginning-position)))
+             (dy (if (and ovl (< (overlay-get ovl 'company-height) 0))
+                     0
+                   (frame-char-height))))
         (when (and ovl doc)
           (with-no-warnings
             (if company-quickhelp-use-propertized-text
@@ -78,17 +81,17 @@
                     (setq doc (pos-tip-truncate-string doc max-width max-height)
                           w-h (pos-tip-string-width-height doc))))
                   (if (display-graphic-p)
-                      (pos-tip-show-no-propertize doc fg-bg (overlay-start ovl) nil timeout
+                      (pos-tip-show-no-propertize doc fg-bg pos nil timeout
                                                   (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
                                                   (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
-                                                  nil (+ overlay-width overlay-position) 1)
+                                                  nil (+ overlay-width overlay-position) dy)
                     (popup-tip doc :point (overlay-start ovl)
                                :width (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
                                :height (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
                                :nostrip nil)))
               (if (display-graphic-p)
-                  (pos-tip-show doc fg-bg (overlay-start ovl) nil timeout width nil
-                                (+ overlay-width overlay-position) 1)
+                  (pos-tip-show doc fg-bg pos nil timeout width nil
+                                (+ overlay-width overlay-position) dy)
                 (popup-tip doc :point (overlay-start ovl)
                            :width width
                            :nostrip t)))))))))
