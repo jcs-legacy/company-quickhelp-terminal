@@ -6,7 +6,7 @@
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; Description: Terminal support for `company-quickhelp'.
 ;; Keyword: terminal extends support tip help
-;; Version: 0.0.2
+;; Version: 0.0.5
 ;; Package-Requires: ((emacs "24.4") (company-quickhelp "2.2.0") (popup "0.5.3"))
 ;; URL: https://github.com/jcs090218/company-quickhelp-terminal
 
@@ -80,21 +80,23 @@
                         (> (cdr w-h) max-height))
                     (setq doc (pos-tip-truncate-string doc max-width max-height)
                           w-h (pos-tip-string-width-height doc))))
-                  (if (display-graphic-p)
-                      (pos-tip-show-no-propertize doc fg-bg pos nil timeout
-                                                  (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
-                                                  (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
-                                                  nil (+ overlay-width overlay-position) dy)
-                    (popup-tip doc :point (overlay-start ovl)
-                               :width (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
-                               :height (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
-                               :nostrip nil)))
-              (if (display-graphic-p)
-                  (pos-tip-show doc fg-bg pos nil timeout width nil
-                                (+ overlay-width overlay-position) dy)
-                (popup-tip doc :point (overlay-start ovl)
-                           :width width
-                           :nostrip t)))))))))
+                  (progn  ; NOTE: These are the major lines I have changed.
+                    (if (display-graphic-p)
+                        (pos-tip-show-no-propertize doc fg-bg pos nil timeout
+                                                    (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
+                                                    (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
+                                                    nil (+ overlay-width overlay-position) dy)
+                      (popup-tip doc :point (overlay-start ovl)
+                                 :width (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
+                                 :height (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
+                                 :nostrip nil))))
+              (progn  ; NOTE: These are the major lines I have changed.
+                (if (display-graphic-p)
+                    (pos-tip-show doc fg-bg pos nil timeout width nil
+                                  (+ overlay-width overlay-position) dy)
+                  (popup-tip doc :point (overlay-start ovl)
+                             :width width
+                             :nostrip t))))))))))
 
 (defun company-quickhelp-terminal-pos-tip-available-p ()
   "Override `company-quickhelp-pos-tip-available-p' function from `company-quickhelp'."
