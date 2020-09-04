@@ -41,79 +41,37 @@
   :group 'tools
   :link '(url-link :tag "Repository" "https://github.com/jcs090218/company-quickhelp-terminal"))
 
-(defun company-quickhelp-terminal--show ()
-  "Override `company-quickhelp--show' function from `company-quickhelp'."
-  (when (company-quickhelp-pos-tip-available-p)
-    (company-quickhelp--cancel-timer)
-    (while-no-input
-      (let* ((selected (nth company-selection company-candidates))
-             (doc (let ((inhibit-message t))
-                    (company-quickhelp--doc selected)))
-             (width 80)
-             (timeout 300)
-             (ovl company-pseudo-tooltip-overlay)
-             (overlay-width (* (frame-char-width)
-                               (if ovl (overlay-get ovl 'company-width) 0)))
-             (overlay-position (* (frame-char-width)
-                                  (- (if ovl (overlay-get ovl 'company-column) 1) 1)))
-             (x-gtk-use-system-tooltips nil)
-             (fg-bg `(,company-quickhelp-color-foreground
-                      . ,company-quickhelp-color-background))
-             (pos (save-excursion
-                    (goto-char (min (overlay-start ovl) (point)))
-                    (line-beginning-position)))
-             (dy (if (and ovl (< (overlay-get ovl 'company-height) 0))
-                     0
-                   (frame-char-height))))
-        (when (and ovl doc)
-          (with-no-warnings
-            (if company-quickhelp-use-propertized-text
-                (let* ((frame (window-frame (selected-window)))
-                       (max-width (pos-tip-x-display-width frame))
-                       (max-height (pos-tip-x-display-height frame))
-                       (w-h (pos-tip-string-width-height doc)))
-                  (cond
-                   ((> (car w-h) width)
-                    (setq doc (pos-tip-fill-string doc width nil 'none nil max-height)
-                          w-h (pos-tip-string-width-height doc)))
-                   ((or (> (car w-h) max-width)
-                        (> (cdr w-h) max-height))
-                    (setq doc (pos-tip-truncate-string doc max-width max-height)
-                          w-h (pos-tip-string-width-height doc))))
-                  (progn  ; NOTE: These are the major lines I have changed.
-                    (if (display-graphic-p)
-                        (pos-tip-show-no-propertize doc fg-bg pos nil timeout
-                                                    (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
-                                                    (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
-                                                    nil (+ overlay-width overlay-position) dy)
-                      (popup-tip doc :point (overlay-start ovl)
-                                 :width (pos-tip-tooltip-width (car w-h) (frame-char-width frame))
-                                 :height (pos-tip-tooltip-height (cdr w-h) (frame-char-height frame) frame)
-                                 :nostrip nil))))
-              (progn  ; NOTE: These are the major lines I have changed.
-                (if (display-graphic-p)
-                    (pos-tip-show doc fg-bg pos nil timeout width nil
-                                  (+ overlay-width overlay-position) dy)
-                  (popup-tip doc :point (overlay-start ovl)
-                             :width width
-                             :nostrip t))))))))))
+;;; Core
 
-(defun company-quickhelp-terminal-pos-tip-available-p ()
+(defun company-quickhelp-terminal--pos-tip-show-no-propertize
+    (string &optional tip-color pos window timeout pixel-width pixel-height frame-coordinates dx dy)
+  "Override `pos-tip-show-no-propertize' function from `pos-tip'."
+  (popup-tip string :point pos :width pixel-width :height pixel-height :nostrip nil))
+
+(defun company-quickhelp-terminal--pos-tip-show
+    (string &optional tip-color pos window timeout width frame-coordinates dx dy)
+  "Override `pos-tip-show' function from `pos-tip'."
+  (popup-tip string :point pos :width width :nostrip t))
+
+(defun company-quickhelp-terminal--pos-tip-available-p ()
   "Override `company-quickhelp-pos-tip-available-p' function from `company-quickhelp'."
   (and
    (fboundp 'x-hide-tip)
    (fboundp 'x-show-tip)))
 
+;;; Entry
 
 (defun company-quickhelp-terminal--enable ()
   "Enable `company-quickhelp-terminal'."
-  (advice-add 'company-quickhelp--show :override #'company-quickhelp-terminal--show)
-  (advice-add 'company-quickhelp-pos-tip-available-p :override #'company-quickhelp-terminal-pos-tip-available-p))
+  (advice-add 'pos-tip-show :override #'company-quickhelp-terminal--pos-tip-show)
+  (advice-add 'pos-tip-show-no-propertize :override #'company-quickhelp-terminal--pos-tip-show-no-propertize)
+  (advice-add 'company-quickhelp-pos-tip-available-p :override #'company-quickhelp-terminal--pos-tip-available-p))
 
 (defun company-quickhelp-terminal--disable ()
   "Disable `company-quickhelp-terminalw'."
-  (advice-remove 'company-quickhelp--show #'company-quickhelp-terminal--show)
-  (advice-remove 'company-quickhelp-pos-tip-available-p #'company-quickhelp-terminal-pos-tip-available-p))
+  (advice-remove 'pos-tip-show #'company-quickhelp-terminal--pos-tip-show)
+  (advice-remove 'pos-tip-show-no-propertize #'company-quickhelp-terminal--pos-tip-show-no-propertize)
+  (advice-remove 'company-quickhelp-pos-tip-available-p #'company-quickhelp-terminal--pos-tip-available-p))
 
 ;;;###autoload
 (define-minor-mode company-quickhelp-terminal-mode
