@@ -46,12 +46,14 @@
 (defun company-quickhelp-terminal--pos-tip-show-no-propertize
     (string &optional tip-color pos window timeout pixel-width pixel-height frame-coordinates dx dy)
   "Override `pos-tip-show-no-propertize' function from `pos-tip'."
-  (popup-tip string :point pos :width pixel-width :height pixel-height :nostrip nil))
+  (popup-tip string :point (overlay-start company-pseudo-tooltip-overlay)
+             :width pixel-width :height pixel-height :nostrip nil))
 
 (defun company-quickhelp-terminal--pos-tip-show
     (string &optional tip-color pos window timeout width frame-coordinates dx dy)
   "Override `pos-tip-show' function from `pos-tip'."
-  (popup-tip string :point pos :width width :nostrip t))
+  (popup-tip string :point (overlay-start company-pseudo-tooltip-overlay)
+             :width width :nostrip t))
 
 (defun company-quickhelp-terminal--pos-tip-available-p ()
   "Override `company-quickhelp-pos-tip-available-p' function from `company-quickhelp'."
