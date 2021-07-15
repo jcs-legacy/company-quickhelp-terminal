@@ -1,8 +1,7 @@
-[![Build Status](https://travis-ci.com/jcs090218/company-quickhelp-terminal.svg?branch=master)](https://travis-ci.com/jcs090218/company-quickhelp-terminal)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![MELPA](https://melpa.org/packages/company-quickhelp-terminal-badge.svg)](https://melpa.org/#/company-quickhelp-terminal)
 [![MELPA Stable](https://stable.melpa.org/packages/company-quickhelp-terminal-badge.svg)](https://stable.melpa.org/#/company-quickhelp-terminal)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
+[![CI](https://github.com/jcs-elpa/company-quickhelp-terminal/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/company-quickhelp-terminal/actions/workflows/test.yml)
 
 # company-quickhelp-terminal
 > Terminal support for `company-quickhelp'.
