@@ -1,6 +1,12 @@
 (source "melpa")
 
+(package "company-quickhelp-terminal" "0.1.0" "Terminal support for `company-quickhelp'")
+
 (package-file "company-quickhelp-terminal.el")
+
+(depends-on "emacs" "24.4")
+(depends-on "company-quickhelp")
+(depends-on "popup")
 
 (setq network-security-level 'low      ; see https://github.com/jcs090218/setup-emacs-windows/issues/156#issuecomment-932956432
       byte-compile-error-on-warn nil)
