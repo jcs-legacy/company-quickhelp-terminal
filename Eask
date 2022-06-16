@@ -2,6 +2,9 @@
          "0.1.0"
          "Terminal support for `company-quickhelp'")
 
+(website-url "https://github.com/jcs-elpa/company-quickhelp-terminal")
+(keywords "terminal" "extends" "support" "tip" "help")
+
 (package-file "company-quickhelp-terminal.el")
 
 (source "melpa")
