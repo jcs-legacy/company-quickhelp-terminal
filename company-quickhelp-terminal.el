@@ -7,7 +7,7 @@
 ;; URL: https://github.com/jcs-elpa/company-quickhelp-terminal
 ;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.4") (company-quickhelp "2.2.0") (popup "0.5.3"))
-;; Keywords: terminal extends support tip help
+;; Keywords: convenience terminal extends support tip help
 
 ;; This file is NOT part of GNU Emacs.
 
