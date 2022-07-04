@@ -3,7 +3,7 @@
          "Terminal support for `company-quickhelp'")
 
 (website-url "https://github.com/jcs-elpa/company-quickhelp-terminal")
-(keywords "terminal" "extends" "support" "tip" "help")
+(keywords "convenience" "terminal" "extends" "support" "tip" "help")
 
 (package-file "company-quickhelp-terminal.el")
 
