@@ -1,6 +1,5 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![MELPA](https://melpa.org/packages/company-quickhelp-terminal-badge.svg)](https://melpa.org/#/company-quickhelp-terminal)
-[![MELPA Stable](https://stable.melpa.org/packages/company-quickhelp-terminal-badge.svg)](https://stable.melpa.org/#/company-quickhelp-terminal)
+[![JCS-ELPA](https://raw.githubusercontent.com/jcs-emacs/badges/master/elpa/v/ivy-describe-modes.svg)](https://jcs-emacs.github.io/jcs-elpa/#/ivy-describe-modes)
 
 # company-quickhelp-terminal
 > Terminal support for `company-quickhelp'.
