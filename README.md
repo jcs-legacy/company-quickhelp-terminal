@@ -5,7 +5,7 @@
 # company-quickhelp-terminal
 > Terminal support for `company-quickhelp'.
 
-[![CI](https://github.com/jcs-elpa/company-quickhelp-terminal/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/company-quickhelp-terminal/actions/workflows/test.yml)
+[![CI](https://github.com/jcs-legacy/company-quickhelp-terminal/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-legacy/company-quickhelp-terminal/actions/workflows/test.yml)
 
 This package extends [company-quickhelp'](https://github.com/expez/company-quickhelp)
 for terminal support using [popup](https://github.com/auto-complete/popup-el).
