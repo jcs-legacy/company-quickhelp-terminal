@@ -1,6 +1,6 @@
 ;;; company-quickhelp-terminal.el --- Terminal support for `company-quickhelp'  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019  Shen, Jen-Chieh
+;; Copyright (C) 2019-2024  Shen, Jen-Chieh
 ;; Created date 2019-12-09 23:06:42
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
