@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "company-quickhelp-terminal"
          "0.1.0"
          "Terminal support for `company-quickhelp'")
